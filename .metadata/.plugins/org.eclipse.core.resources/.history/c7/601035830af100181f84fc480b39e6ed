@@ -1,0 +1,29 @@
+import java.io.*;
+import java.util.*;
+
+public class balloon {
+	private static int numProblems;
+	private static int[] balloons;
+	private static int[] problem_sizes;
+	
+	private int numBalloons;
+	private int numHit;
+	private int numArrows;
+	
+	public static void main(String[] args) {
+		try {
+			String file = args[0];
+			File f = new File(file);
+			Scanner s = new Scanner(new File(file));
+            String[] ln = s.nextLine().split("\\s+"); /*first line is the source and destination*/
+            numProblems=Integer.parseInt(ln[0]);
+            ln = s.nextLine().split("\\s+");	//Get Problem sizes
+            for(int i=0; i<numProblems; i++){
+            	problem_sizes[i]=Integer.parseInt(ln[i]);
+            }
+            
+            
+
+	}
+
+}
