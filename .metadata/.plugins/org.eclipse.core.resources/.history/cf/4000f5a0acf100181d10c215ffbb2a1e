@@ -1,0 +1,74 @@
+import java.io.*;
+import java.util.*;
+
+public class balloon {
+	private static int numProblems;
+	private static ArrayList<Integer> balloons;
+	private static int[] problem_sizes;
+	
+	private static int numBalloons;
+	private int numHit;
+	private int numArrows;
+	
+	public static void main(String[] args) {
+		
+		try {
+			String file = "testBalloons.txt";
+			File f = new File(file);
+			Scanner s = new Scanner(f);
+            String[] ln = s.nextLine().split("\\s+"); /*first line is the source and destination*/
+            numProblems=Integer.parseInt(ln[0]);
+            int[] problem_sizes = new int[numProblems];
+            ln = s.nextLine().split("\\s+");	//Get Problem sizes
+            for(int i=0; i<numProblems; i++){
+            	problem_sizes[i]=Integer.parseInt(ln[i]);
+            }
+            
+            
+            for(int i=0; i<numProblems; i++){	//For each problem
+            	balloons=new ArrayList<Integer>();
+            	int numBalloons_ret=0;
+            	numBalloons=problem_sizes[i];
+            	ln = s.nextLine().split("\\s+");
+            	numBalloons_ret=ln.length;
+            	for(int k=0; k<ln.length; k++)	//Fill balloons with the heights
+            		balloons.add(Integer.parseInt(ln[k]));
+            	
+            	while(numBalloons_ret<numBalloons){	//Check if more to fill
+            		ln = s.nextLine().split("\\s+");	//Look at next line
+            		for(int j=0; j<ln.length; j++)
+            			balloons.add(Integer.parseInt(ln[j]));
+            	}
+            	//System.out.println(Arrays.toString(balloons.toArray()));
+            	//Compute
+            	
+            	
+            	
+            	
+            }
+		}    
+        catch(FileNotFoundException e){
+        	System.out.println("File not found!");
+            System.exit(1);
+        }
+	}
+	public static int findNumArrows(ArrayList<Integer> balloons){
+		int numArrowsNeeded=0;
+		int maxHeight = Collections.max(balloons);
+		int arrowHeight=maxHeight;
+		while(balloons.size()>0){	//Draw new Arrow
+			maxHeight = Collections.max(balloons);
+			arrowHeight=maxHeight;
+			balloons.remove(arrowHeight);
+			numArrowsNeeded++;
+			arrowHeight--;
+			while(arrowHeight>=Collections.min(balloons) && balloons.size()>0){	//Check for multiple hits
+				balloons.remove(arrowHeight);				
+				arrowHeight--;
+			}
+		}
+		return numArrowsNeeded;
+		
+	}
+
+}
