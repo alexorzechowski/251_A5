@@ -1,0 +1,31 @@
+import java.io.*;
+import java.util.*;
+
+public class islands {
+	
+	private static int numProblems;
+	private static int numRows;
+	private static int numPixels;
+	
+	public static void main(String[] args) {
+		try {
+			String file = "testBalloons.txt";
+			File f = new File(file);
+			Scanner s = new Scanner(f);
+			String[] ln = s.nextLine().split("\\s+");
+			numProblems=Integer.parseInt(ln[0]);
+			for(int i=0; i<numProblems; i++){
+				ln = s.nextLine().split("\\s+");
+				numRows=Integer.parseInt(ln[0]);
+				numPixels=Integer.parseInt(ln[1]);
+			}
+			
+			
+		}
+		catch(FileNotFoundException e){
+        	System.out.println("File not found!");
+            System.exit(1);
+        }	
+	}
+	
+}

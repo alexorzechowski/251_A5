@@ -1,0 +1,21 @@
+import java.io.*;
+import java.util.*;
+
+public class islands {
+
+	public static void main(String[] args) {
+
+	}
+	public static void parseInput(){
+		try {
+			String file = "testBalloons.txt";
+			File f = new File(file);
+			Scanner s = new Scanner(f);
+			String[] ln = s.nextLine().split("\\s+");
+		}
+		catch(FileNotFoundException e){
+        	System.out.println("File not found!");
+            System.exit(1);
+        }	
+	}
+}
