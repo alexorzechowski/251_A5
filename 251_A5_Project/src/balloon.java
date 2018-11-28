@@ -5,6 +5,7 @@ public class balloon {
 	private static int numProblems;
 	private static ArrayList<Integer> balloons;
 	private static int[] problem_sizes;
+	private static int[] answers;
 	
 	private static int numBalloons;
 	private int numHit;
@@ -18,6 +19,7 @@ public class balloon {
 			Scanner s = new Scanner(f);
             String[] ln = s.nextLine().split("\\s+"); /*first line is the source and destination*/
             numProblems=Integer.parseInt(ln[0]);
+            answers = new int[numProblems];
             int[] problem_sizes = new int[numProblems];
             ln = s.nextLine().split("\\s+");	//Get Problem sizes
             for(int i=0; i<numProblems; i++){
@@ -45,10 +47,20 @@ public class balloon {
             	//System.out.println(balloons.size());
             	//Compute
             	int arrows = findNumArrows(balloons);
-            	System.out.println(arrows);
-            	
-            	
+            	answers[i]=arrows;
+         	
             }
+            //Write Output
+            PrintWriter w = new PrintWriter("testBalloons_solution.txt");              // To generate a solution file.
+            for (int i = 0; i < answers.length; i++){
+                if (i == answers.length - 1){
+                    w.print(answers[i]);
+                }
+                else{
+                    w.println(answers[i]);
+                }
+            }
+            w.close();
 		}    
         catch(FileNotFoundException e){
         	System.out.println("File not found!");
@@ -72,7 +84,7 @@ public class balloon {
 					break;
 				balloons.remove(newIndex);
 				arrowHeight--;
-				
+				index=newIndex;	//Update index
 			}
 		}
 		return numArrowsNeeded;		
