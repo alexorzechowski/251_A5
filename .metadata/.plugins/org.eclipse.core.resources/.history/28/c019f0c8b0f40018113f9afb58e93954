@@ -1,0 +1,117 @@
+import java.io.*;
+import java.util.*;
+
+class SubIsland {
+	public static ArrayList<int[]> pixels = new ArrayList<int[]>();
+	
+	public SubIsland(int[] pixel){
+		//pixels = new ArrayList<int[]>();
+		pixels.add(pixel);
+	}
+	public void addPixel(int[] pixel){
+		pixels.add(pixel);
+	}
+}
+public class islands {
+	
+	private static int numProblems;
+	private static int numRows;
+	private static int numPixels;
+	private static char[][] I;
+	private static ArrayList<SubIsland> subIslands;
+	private static int numIslands;
+	
+	
+	public static void main(String[] args) {
+		try {
+			String file = "testIslands.txt";
+			File f = new File(file);
+			Scanner s = new Scanner(f);
+			String[] ln = s.nextLine().split("\\s+");
+			numProblems=Integer.parseInt(ln[0]);
+			for(int i=0; i<numProblems; i++){
+				ln = s.nextLine().split("\\s+");
+				numRows=Integer.parseInt(ln[0]);
+				numPixels=Integer.parseInt(ln[1]);
+				I= new char[numRows][numPixels];
+				
+				for(int row=0; row<numRows; row++){
+					int chars_ret=0;
+					int curCol=0;
+					
+					while(chars_ret<numPixels){
+						ln = s.nextLine().split("\\s+");
+						int index=0;
+						for(int col=curCol; col<numPixels; col++){
+							I[row][col]=ln[0].charAt(index);
+							index++;		
+						}
+						curCol=ln[0].length();
+						chars_ret+=ln[0].length();
+					}
+				}
+				subIslands= new ArrayList<SubIsland>();
+				//Compute
+				numIslands = findNumIslands(I);
+				System.out.println(numIslands);
+			
+			}
+			
+			
+		}
+		catch(FileNotFoundException e){
+        	System.out.println("File not found!");
+            System.exit(1);
+        }	
+	}
+
+
+	private static int findNumIslands(char[][] I) {
+		int numIslands=0;
+		int[] pixel=new int[2];
+		for(int row=0; row<numRows; row++){
+			for(int col=0; col<numPixels; col++){
+				if(I[row][col]=='-'){
+					pixel[0]=row;
+					pixel[1]=col;
+					boolean merged = canMergeWithSubIsland(pixel);
+					if(merged==false){
+						subIslands.add(new SubIsland(pixel));
+						numIslands++;
+					}
+				}
+			}
+		}
+		
+		return numIslands;
+	}
+	public static boolean canMergeWithSubIsland(int[] pixel){
+		boolean answer=false;
+		for(SubIsland sub: subIslands){
+			for(int[] sub_pix: sub.pixels){
+				if( pixel[1]==sub_pix[1] ){	//Pixels bordering horizontally
+					if(pixel[0]==sub_pix[0]+1 ){
+						sub.addPixel(sub_pix);
+						return true;
+					}
+					else if(pixel[0]==sub_pix[0]-1){
+						sub.addPixel(sub_pix);
+						return true;
+					}
+				}
+				else if(pixel[0]==sub_pix[0] ){	//Pixels bordering vertically
+					if(pixel[1]==sub_pix[1]+1 ){
+						sub.addPixel(sub_pix);
+						return true;
+					}
+					else if(pixel[1]==sub_pix[1]-1){
+						sub.addPixel(sub_pix);
+						return true;
+					}
+				}
+			}
+		}
+		return false;
+	}
+	
+}
