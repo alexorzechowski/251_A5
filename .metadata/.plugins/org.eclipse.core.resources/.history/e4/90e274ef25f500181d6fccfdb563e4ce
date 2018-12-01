@@ -78,11 +78,8 @@ public class islands {
 	public static void discover(int[] pixel){
 		int[] nieghbor=hasWhiteNeighbor(pixel);
 		while(nieghbor!=null){
-			if(disc[nieghbor[0]][nieghbor[1]]==0){
-				disc[nieghbor[0]][nieghbor[1]]=1;	//Mark Discovered
-				discover(nieghbor);
-			}
-			else return;
+			disc[nieghbor[0]][nieghbor[1]]=1;	//Mark Discovered
+			discover(nieghbor);
 		}
 				//No More new white pixels to visit (Base Case)
 		numIslands++;
@@ -107,7 +104,7 @@ public class islands {
 		//Last row and col: chain is done
 		
 		//Regular Cases
-		else if( I[pixel[0]][pixel[1]+1]=='-' && disc[pixel[0]][pixel[1]+1]==0){	//Pixels bordering horizontally
+		else if( I[pixel[0]][pixel[1]+1]=='-'){	//Pixels bordering horizontally
 			neighbor=new int[2];
 			neighbor[0]=pixel[0];
 			neighbor[1]=pixel[1]+1;
@@ -118,7 +115,7 @@ public class islands {
 			neighbor[0]=pixel[0];
 			neighbor[1]=pixel[1]-1;
 		} */
-		else if( I[pixel[0]+1][pixel[1]]=='-' && disc[pixel[0]+1][pixel[1]]==0){
+		else if( I[pixel[0]+1][pixel[1]]=='-' ){
 			neighbor=new int[2];
 			neighbor[0]=pixel[0]+1;
 			neighbor[1]=pixel[1];

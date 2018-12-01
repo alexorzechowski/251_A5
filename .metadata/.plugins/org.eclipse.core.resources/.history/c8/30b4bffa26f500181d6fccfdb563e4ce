@@ -82,7 +82,6 @@ public class islands {
 				disc[nieghbor[0]][nieghbor[1]]=1;	//Mark Discovered
 				discover(nieghbor);
 			}
-			else return;
 		}
 				//No More new white pixels to visit (Base Case)
 		numIslands++;
