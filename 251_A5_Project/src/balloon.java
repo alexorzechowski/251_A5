@@ -12,16 +12,16 @@ public class balloon {
 	private int numArrows;
 	
 	public static void main(String[] args) {
-		
+		BufferedReader s=null;
 		try {
 			String file = "testBalloons.txt";
 			File f = new File(file);
-			Scanner s = new Scanner(f);
-            String[] ln = s.nextLine().split("\\s+"); /*first line is the source and destination*/
+			s = new BufferedReader(new FileReader(f));
+            String[] ln = s.readLine().split("\\s+"); /*first line is the source and destination*/
             numProblems=Integer.parseInt(ln[0]);
             answers = new int[numProblems];
             int[] problem_sizes = new int[numProblems];
-            ln = s.nextLine().split("\\s+");	//Get Problem sizes
+            ln = s.readLine().split("\\s+");	//Get Problem sizes
             for(int i=0; i<numProblems; i++){
             	problem_sizes[i]=Integer.parseInt(ln[i]);
             }
@@ -31,20 +31,18 @@ public class balloon {
             	balloons=new ArrayList<Integer>();
             	int numBalloons_ret=0;
             	numBalloons=problem_sizes[i];
-            	ln = s.nextLine().split("\\s+");
+            	ln = s.readLine().split("\\s+");
             	numBalloons_ret=ln.length;
             	for(int k=0; k<ln.length; k++)	//Fill balloons with the heights
             		balloons.add(Integer.parseInt(ln[k]));
             	
             	while(numBalloons_ret<numBalloons){	//Check if more to fill
-            		ln = s.nextLine().split("\\s+");	//Look at next line
+            		ln = s.readLine().split("\\s+");	//Look at next line
             		for(int j=0; j<ln.length; j++){
             			balloons.add(Integer.parseInt(ln[j]));
             			numBalloons_ret=numBalloons_ret+1;
             		}
-            	}
-            	//System.out.println(Arrays.toString(balloons.toArray()));
-            	//System.out.println(balloons.size());
+            	}           	
             	//Compute
             	int arrows = findNumArrows(balloons);
             	answers[i]=arrows;
@@ -62,7 +60,7 @@ public class balloon {
             }
             w.close();
 		}    
-        catch(FileNotFoundException e){
+        catch(IOException e){
         	System.out.println("File not found!");
             System.exit(1);
         }
