@@ -1,0 +1,51 @@
+import java.io.*;
+import java.util.*;
+
+public class mancala {
+	private static int numProblems;
+	private static int[] answers;
+	private static int[] board;
+	public static void main(String[] args) {
+		BufferedReader s=null;
+		try {
+			String file = "testMancala.txt";
+			File f = new File(file);
+			s = new BufferedReader(new FileReader(f));
+			String[] ln = s.readLine().split("\\s+");
+			numProblems=Integer.parseInt(ln[0]);
+			answers=new int[numProblems];
+			for(int i=0; i<numProblems; i++){
+				ln = s.readLine().split("\\s+");
+				board=new int[12];
+				for(int j=0; j<12; j++)
+					board[j]=Integer.parseInt(ln[j]);
+				int remaining = findMinRem(board);
+				
+			}
+		}
+		catch(IOException e){
+        	System.out.println("File not found!");
+            System.exit(1);
+        }	
+		finally {
+		    try {
+		        s.close();
+		    } catch (IOException e) {
+		        e.printStackTrace();
+		    }
+		}
+	}
+
+
+	private static int findMinRem(int[] board) {
+		for(int i=0; i<12; i++){
+			if(board[i]==1 && board[i+1]==1){
+				if(board[i-1]==0){	//empty slot to the left
+					
+				}
+			}
+		}
+		
+		return 0;
+	}
+}

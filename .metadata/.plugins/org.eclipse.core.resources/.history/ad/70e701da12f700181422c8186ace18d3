@@ -1,0 +1,72 @@
+import java.io.*;
+import java.util.*;
+
+public class mancala {
+	private static int numProblems;
+	private static int[] answers;
+	private static int[] board;
+	private static int numOnes;
+	public static void main(String[] args) {
+		BufferedReader s=null;
+		try {
+			String file = "testMancala.txt";
+			File f = new File(file);
+			s = new BufferedReader(new FileReader(f));
+			String[] ln = s.readLine().split("\\s+");
+			numProblems=Integer.parseInt(ln[0]);
+			answers=new int[numProblems];
+			for(int i=0; i<numProblems; i++){
+				ln = s.readLine().split("\\s+");
+				board=new int[12];
+				numOnes=0;
+				for(int j=0; j<12; j++){
+					board[j]=Integer.parseInt(ln[j]);
+					if(board[j]==1)
+						numOnes++;
+				}
+				int remaining = findMinRem(board);
+				
+			}
+		}
+		catch(IOException e){
+        	System.out.println("File not found!");
+            System.exit(1);
+        }	
+		finally {
+		    try {
+		        s.close();
+		    } catch (IOException e) {
+		        e.printStackTrace();
+		    }
+		}
+	}
+
+
+	private static int findMinRem(int[] board) {
+		int w=numOnes;
+		int y=numOnes;
+		for(int i=0; i<11; i++){	//Traverse board left to right
+			if(board[i]==1 && board[i+1]==1){	//Find adj 2 pebbles 
+				if(i>=1 && board[i-1]==0){	//Empty slot to the left
+					int[] newBoard=board.clone();
+					newBoard[i-1]=1;
+					newBoard[i]=0;
+					newBoard[i+1]=0;
+					w=findMinRem(newBoard);						
+				}
+			}
+			if(i<=9 && board[i+2]==0){	//Empty slot to the right
+				int[] newBoard=board.clone();
+				newBoard[i]=0;
+				newBoard[i+1]=0;
+				newBoard[i+2]=1;
+				y = findMinRem(newBoard);
+			}
+		}
+		if(w<y && w<numOnes)
+			return w;
+		else if(y<w && y<numOnes)
+			return y;
+		else return numOnes; //Could not do any moves				
+	}
+}
