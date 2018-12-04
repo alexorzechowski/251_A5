@@ -1,5 +1,4 @@
 import java.io.*;
-import java.util.*;
 
 public class mancala {
 	private static int numProblems;
@@ -25,7 +24,7 @@ public class mancala {
 						numOnes++;
 				}
 				int remaining = findMinRem(board);
-				//System.out.println(remaining);
+				System.out.println(remaining);
 				answers[i]=remaining;
 			}
 			 PrintWriter w = new PrintWriter("testMancala_solution.txt");
@@ -56,38 +55,37 @@ public class mancala {
 	private static int findMinRem(int[] board) {
 		int w=numOnes;
 		int y=numOnes;
-		int newNumOnes=numOnes;
+		int numOnes=0;
+		int[] newBoard=null;
+
 		for(int i=0; i<11; i++){	//Traverse board left to right
 			if(board[i]==1 && board[i+1]==1){	//Find adj 2 pebbles 
-				int[] newBoard=null;
 				if(i>=1 && board[i-1]==0){	//Empty slot to the left
-					newBoard=board.clone();
-					newBoard[i-1]=1;
-					newBoard[i]=0;
-					newBoard[i+1]=0;
-					w=findMinRem(newBoard);						
+					int[] newBoard1=board.clone();
+					newBoard1[i-1]=1;
+					newBoard1[i]=0;
+					newBoard1[i+1]=0;
+					w=findMinRem(newBoard1);						
 				}
 			
 				if(i<=9 && board[i+2]==0){	//Empty slot to the right
-					newBoard=board.clone();
-					newBoard[i]=0;
-					newBoard[i+1]=0;
-					newBoard[i+2]=1;
-					y = findMinRem(newBoard);
-				}
-				newNumOnes=0;
-				for(int j=0; j<12; j++){
-					if(newBoard[j]==1)
-						newNumOnes++;
-				}
-				
-				if(w<y && w<newNumOnes)
-					return w;
-				else if(y<w && y<newNumOnes)
-					return y;
-				else return newNumOnes; //Could not do any moves
+					int[] newBoard2=board.clone();
+					newBoard2[i]=0;
+					newBoard2[i+1]=0;
+					newBoard2[i+2]=1;
+					y = findMinRem(newBoard2);
+				}				
 			}
 		}
-		return newNumOnes;
-	}
+		for(int j=0; j<12; j++){	//Count num ones on board
+			if(board[j]==1)
+				numOnes++;
+		}
+		if(w<=y && w<=numOnes)
+			return w;
+		else if(y<=w && y<=numOnes)
+			return y;
+		else return numOnes; //Could not do any moves
+		
+	}	
 }
